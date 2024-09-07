@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Import the first python file then writes async_comprehension that takes no arguments.
+""" Import the first python file then writes async_comprehension.
     Which will collect 10 random numbers using an async comprehensing
     then return 10 random numbers. """
 import asyncio
