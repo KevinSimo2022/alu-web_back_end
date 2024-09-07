@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-This script defines a type-annotated function `add` that returns the sum of two floats.
+This script defines a type-annotated function `add` that returns the sum of 
+two floats.
 """
 
 def add(a: float, b: float) -> float:
