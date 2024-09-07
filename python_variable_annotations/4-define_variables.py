@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
-"""
-This script defines and annotates several variables with specific types and values.
-"""
-
+"""Defining variables
+    Define then annotate these variables with the specified values """
 a: int = 1
 pi: float = 3.14
 i_understand_annotations: bool = True
 school: str = 'Holberton'
-
