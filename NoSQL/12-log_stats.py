@@ -1,12 +1,30 @@
 #!/usr/bin/env python3
+"""
+12-log_stats.py
+
+This script connects to a MongoDB database and analyzes the logs stored in the
+'nginx' collection. It provides the following statistics:
+
+1. The total number of log entries.
+2. The count of HTTP methods (GET, POST, PUT, PATCH, DELETE) used in the logs.
+3. The number of GET requests specifically targeting the '/status' endpoint.
+
+Usage:
+    Run the script in an environment where MongoDB is accessible, and the 
+    'logs' database contains the 'nginx' collection.
+
+Dependencies:
+    - pymongo: The MongoDB driver for Python. Install via pip if not already installed.
+"""
+
 from pymongo import MongoClient
 
 def main():
     """
-    Analyzes logs in the 'nginx' collection of MongoDB.
+    Main function to execute log analysis.
     
-    Prints the total number of logs, the count of different HTTP methods,
-    and the count of GET requests to the '/status' endpoint.
+    Connects to the MongoDB database, retrieves log statistics, and prints
+    them to the console.
     """
     # Establish a connection to the MongoDB server
     client = MongoClient()
