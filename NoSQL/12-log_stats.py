@@ -1,54 +1,35 @@
-"""
-12-log_stats.py
-A script to analyze logs in the nginx collection of MongoDB.
-
-This script connects to the MongoDB database, retrieves log data from the 'nginx' collection,
-and provides statistics on HTTP methods used in the logs. It also checks the state of the
-collection and can stop the MongoDB server if needed.
-
-Usage:
-- Run the script to get statistics on the nginx log collection.
-"""
-
+#!/usr/bin/env python3
 from pymongo import MongoClient
 
 def main():
-    # Connect to MongoDB
-    client = MongoClient('mongodb://localhost:27017/')
-    db = client['logs']  # Connect to the 'logs' database
-    collection = db['nginx']  # Access the 'nginx' collection
+    """
+    Analyzes logs in the 'nginx' collection of MongoDB.
+    
+    Prints the total number of logs, the count of different HTTP methods,
+    and the count of GET requests to the '/status' endpoint.
+    """
+    # Establish a connection to the MongoDB server
+    client = MongoClient()
+    
+    # Access the 'logs' database
+    db = client.logs
+    
+    # Get the total number of logs in the 'nginx' collection
+    total_logs = db.nginx.count_documents({})
+    print(f"Total logs: {total_logs} logs")
 
-    # Check the number of documents in the collection
-    count = collection.count_documents({})
-    if count == 0:
-        print("Collection nginx empty")
-    elif count == 1:
-        print("Collection nginx with 1 document")
-    elif count == 10:
-        print("Collection nginx with 10 documents")
-    else:
-        print("Collection nginx with a lot of documents")
-
-    # Query to get the total number of logs
-    total_logs = collection.count_documents({})
-    print(f"{total_logs} logs")
-
-    # Query to get the count of HTTP methods
-    methods_count = {
-        "GET": collection.count_documents({"method": "GET"}),
-        "POST": collection.count_documents({"method": "POST"}),
-        "PUT": collection.count_documents({"method": "PUT"}),
-        "PATCH": collection.count_documents({"method": "PATCH"}),
-        "DELETE": collection.count_documents({"method": "DELETE"})
-    }
-
-    # Print the counts of each method
-    for method, count in methods_count.items():
-        print(f"method {method}: {count}")
-
-    # Optional: Stop MongoDB server (ensure you have permissions)
-    # Uncomment the following line if you want to stop MongoDB
-    # client.admin.command('shutdown')
+    # List of HTTP methods to count
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    print("Methods:")
+    
+    # Count and display the number of documents for each method
+    for method in methods:
+        count = db.nginx.count_documents({"method": method})
+        print(f"\tMethod {method}: {count}")
+    
+    # Count GET requests to the '/status' path
+    status_check_count = db.nginx.count_documents({"method": "GET", "path": "/status"})
+    print(f"GET requests to /status: {status_check_count} status check")
 
 if __name__ == "__main__":
     main()
