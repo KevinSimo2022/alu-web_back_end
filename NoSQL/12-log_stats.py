@@ -34,7 +34,7 @@ def main():
     
     # Get the total number of logs in the 'nginx' collection
     total_logs = db.nginx.count_documents({})
-    print(f"Total logs: {total_logs} logs")
+    print(f"{total_logs} logs")  # Adjusted output to match expected format
 
     # List of HTTP methods to count
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
@@ -43,11 +43,11 @@ def main():
     # Count and display the number of documents for each method
     for method in methods:
         count = db.nginx.count_documents({"method": method})
-        print(f"\tMethod {method}: {count}")
+        print(f"\tmethod {method}: {count}")  # Adjusted method case to lowercase
     
     # Count GET requests to the '/status' path
     status_check_count = db.nginx.count_documents({"method": "GET", "path": "/status"})
-    print(f"GET requests to /status: {status_check_count} status check")
+    print(f"{status_check_count} status check")  # Adjusted output to match expected format
 
 if __name__ == "__main__":
     main()
